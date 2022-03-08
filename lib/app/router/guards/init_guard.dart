@@ -1,5 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:flutter_template_project/app/router/app_router.gr.dart';
+import 'package:road_to_the_dream/app/router/app_router.gr.dart';
 
 class InitGuard implements AutoRouteGuard {
   final bool Function() isInitialized;

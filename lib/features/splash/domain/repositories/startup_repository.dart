@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:flutter_template_project/core/failure.dart';
+import 'package:road_to_the_dream/core/failure.dart';
 
 abstract class StartupRepository {
   bool get isInitialized;

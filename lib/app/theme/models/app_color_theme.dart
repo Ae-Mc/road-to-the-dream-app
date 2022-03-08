@@ -1,6 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_template_project/app/theme/models/app_pallete.dart';
+import 'package:road_to_the_dream/app/theme/models/app_pallete.dart';
 
 @immutable
 abstract class AppColorTheme {

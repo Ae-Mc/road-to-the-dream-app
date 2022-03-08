@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_template_project/app/theme/bloc/app_theme.dart';
+import 'package:road_to_the_dream/app/theme/bloc/app_theme.dart';
 
 class SplashLoading extends StatelessWidget {
   const SplashLoading({Key? key}) : super(key: key);

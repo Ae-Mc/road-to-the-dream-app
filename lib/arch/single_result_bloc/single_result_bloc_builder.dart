@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_template_project/arch/single_result_bloc/single_result_bloc.dart';
-import 'package:flutter_template_project/arch/single_result_bloc/stream_listener.dart';
+import 'package:road_to_the_dream/arch/single_result_bloc/single_result_bloc.dart';
+import 'package:road_to_the_dream/arch/single_result_bloc/stream_listener.dart';
 
 typedef SingleResultListener<SingleResult> = void Function(
   BuildContext context,

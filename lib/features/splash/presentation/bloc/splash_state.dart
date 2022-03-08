@@ -1,4 +1,4 @@
-import 'package:flutter_template_project/core/failure.dart';
+import 'package:road_to_the_dream/core/failure.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'splash_state.freezed.dart';

@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:flutter_template_project/arch/single_result_bloc/single_result_mixin.dart';
+import 'package:road_to_the_dream/arch/single_result_bloc/single_result_mixin.dart';
 
 /// Абстракция для расширения возможностей блок для отправки SingleResult - событий которые необходимо отрендерить 1 раз
 /// - Навгиация

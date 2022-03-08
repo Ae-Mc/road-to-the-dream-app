@@ -1,7 +1,7 @@
-import 'package:flutter_template_project/arch/single_result_bloc/single_result_bloc.dart';
-import 'package:flutter_template_project/features/splash/domain/repositories/startup_repository.dart';
-import 'package:flutter_template_project/features/splash/presentation/bloc/splash_event.dart';
-import 'package:flutter_template_project/features/splash/presentation/bloc/splash_state.dart';
+import 'package:road_to_the_dream/arch/single_result_bloc/single_result_bloc.dart';
+import 'package:road_to_the_dream/features/splash/domain/repositories/startup_repository.dart';
+import 'package:road_to_the_dream/features/splash/presentation/bloc/splash_event.dart';
+import 'package:road_to_the_dream/features/splash/presentation/bloc/splash_state.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
@@ -11,6 +11,7 @@ class SplashBloc
 
   SplashBloc(this.repository) : super(const SplashState.loading()) {
     on<SplashEvent>((event, emit) async {
+      // ignore: avoid-ignoring-return-values
       await event.when<Future<void>>(
         init: () async => (await repository.initialize()).fold(
           (l) => emit(SplashState.failure(l.first)),

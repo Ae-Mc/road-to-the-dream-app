@@ -1,7 +1,7 @@
-import 'package:flutter_template_project/core/failure.dart';
+import 'package:road_to_the_dream/core/failure.dart';
 import 'package:dartz/dartz.dart';
-import 'package:flutter_template_project/features/splash/data/models/initialization_status.dart';
-import 'package:flutter_template_project/features/splash/domain/repositories/startup_repository.dart';
+import 'package:road_to_the_dream/features/splash/data/models/initialization_status.dart';
+import 'package:road_to_the_dream/features/splash/domain/repositories/startup_repository.dart';
 import 'package:injectable/injectable.dart';
 
 @Singleton(as: StartupRepository)
