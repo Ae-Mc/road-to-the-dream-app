@@ -6,8 +6,7 @@ import 'package:injectable/injectable.dart';
 
 @Singleton(as: StartupRepository)
 class StartupRepositoryImpl implements StartupRepository {
-  InitializationStatus initializationStatus =
-      InitializationStatus(loadingInitialized: false);
+  InitializationStatus initializationStatus = InitializationStatus();
 
   @override
   bool get isInitialized {
@@ -17,16 +16,6 @@ class StartupRepositoryImpl implements StartupRepository {
   @override
   Future<Either<List<Failure>, void>> initialize() async {
     List<Failure> failures = [];
-    initializationStatus = initializationStatus.copyWith(
-      loadingInitialized: (await initializeLoading()).fold(
-        (l) {
-          failures.add(l);
-
-          return false;
-        },
-        (r) => true,
-      ),
-    );
 
     return failures.isEmpty ? const Right(null) : Left(failures);
   }
@@ -34,18 +23,6 @@ class StartupRepositoryImpl implements StartupRepository {
   @override
   Future<Either<List<Failure>, void>> retryInitialization() async {
     List<Failure> failures = [];
-    if (!initializationStatus.loadingInitialized) {
-      initializationStatus = initializationStatus.copyWith(
-        loadingInitialized: (await initializeLoading()).fold(
-          (l) {
-            failures.add(l);
-
-            return false;
-          },
-          (r) => true,
-        ),
-      );
-    }
 
     return failures.isEmpty ? const Right(null) : Left(failures);
   }

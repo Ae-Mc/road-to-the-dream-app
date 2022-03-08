@@ -3,10 +3,9 @@ part 'initialization_status.freezed.dart';
 
 @freezed
 class InitializationStatus with _$InitializationStatus {
-  factory InitializationStatus({required bool loadingInitialized}) =
-      _InitializationStatus;
+  factory InitializationStatus() = _InitializationStatus;
 
   InitializationStatus._();
 
-  List<bool> get statuses => [loadingInitialized];
+  List<bool> get statuses => [];
 }
