@@ -1,0 +1,58 @@
+import 'package:flutter_template_project/core/failure.dart';
+import 'package:dartz/dartz.dart';
+import 'package:flutter_template_project/features/splash/data/models/initialization_status.dart';
+import 'package:flutter_template_project/features/splash/domain/repositories/startup_repository.dart';
+import 'package:injectable/injectable.dart';
+
+@Singleton(as: StartupRepository)
+class StartupRepositoryImpl implements StartupRepository {
+  InitializationStatus initializationStatus =
+      InitializationStatus(loadingInitialized: false);
+
+  @override
+  bool get isInitialized {
+    return initializationStatus.statuses.every((element) => element);
+  }
+
+  @override
+  Future<Either<List<Failure>, void>> initialize() async {
+    List<Failure> failures = [];
+    initializationStatus = initializationStatus.copyWith(
+      loadingInitialized: (await initializeLoading()).fold(
+        (l) {
+          failures.add(l);
+
+          return false;
+        },
+        (r) => true,
+      ),
+    );
+
+    return failures.isEmpty ? const Right(null) : Left(failures);
+  }
+
+  @override
+  Future<Either<List<Failure>, void>> retryInitialization() async {
+    List<Failure> failures = [];
+    if (!initializationStatus.loadingInitialized) {
+      initializationStatus = initializationStatus.copyWith(
+        loadingInitialized: (await initializeLoading()).fold(
+          (l) {
+            failures.add(l);
+
+            return false;
+          },
+          (r) => true,
+        ),
+      );
+    }
+
+    return failures.isEmpty ? const Right(null) : Left(failures);
+  }
+
+  Future<Either<Failure, void>> initializeLoading() async {
+    await Future.delayed(const Duration(seconds: 2), () => null);
+
+    return const Right(null);
+  }
+}
