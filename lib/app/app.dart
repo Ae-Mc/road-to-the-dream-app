@@ -6,6 +6,7 @@ import 'package:road_to_the_dream/app/router/app_router.gr.dart';
 import 'package:road_to_the_dream/app/theme/bloc/app_theme.dart';
 import 'package:road_to_the_dream/app/theme/bloc/app_theme_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:road_to_the_dream/features/tasks/presentation/bloc/tasks_bloc.dart';
 
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
@@ -17,8 +18,11 @@ class App extends StatelessWidget {
       DeviceOrientation.portraitDown,
     ]);
 
-    return BlocProvider(
-      create: (context) => AppThemeBloc(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => AppThemeBloc()),
+        BlocProvider(create: (_) => TasksBloc()),
+      ],
       child: BlocBuilder<AppThemeBloc, AppTheme>(
         builder: (context, state) {
           return MaterialApp.router(
