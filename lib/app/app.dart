@@ -26,7 +26,7 @@ class App extends StatelessWidget {
       child: BlocBuilder<AppThemeBloc, AppTheme>(
         builder: (context, state) {
           return MaterialApp.router(
-            title: "Flutter template project",
+            title: "Road to the dream",
             routeInformationParser: router.defaultRouteParser(),
             routerDelegate: router.delegate(),
             debugShowCheckedModeBanner: false,
