@@ -10,21 +10,29 @@ abstract class AppColorTheme {
   Color get onBackground;
   Color get onPrimary;
   Color get primary;
+  Color get secondary;
+  Color get tertiary;
 }
 
 class LightColorTheme implements AppColorTheme {
   @override
-  Brightness get brightness => Brightness.light;
+  Brightness get brightness => Brightness.dark;
 
   @override
-  Color get background => AppPallete.white;
+  Color get background => AppPallete.darkBlue;
 
   @override
-  Color get onBackground => AppPallete.subBlack;
+  Color get onBackground => AppPallete.white;
 
   @override
   Color get onPrimary => AppPallete.white;
 
   @override
-  Color get primary => AppPallete.subBlack;
+  Color get primary => AppPallete.darkBlue;
+
+  @override
+  Color get secondary => AppPallete.beige;
+
+  @override
+  Color get tertiary => AppPallete.lightBlue;
 }
