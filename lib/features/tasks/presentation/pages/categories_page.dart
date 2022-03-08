@@ -9,6 +9,7 @@ import 'package:road_to_the_dream/features/tasks/domain/entities/category.dart';
 import 'package:road_to_the_dream/features/tasks/domain/entities/task.dart';
 import 'package:road_to_the_dream/features/tasks/presentation/bloc/tasks_bloc.dart';
 import 'package:road_to_the_dream/features/tasks/presentation/bloc/tasks_state.dart';
+import 'package:road_to_the_dream/features/tasks/presentation/pages/create_category_dialog.dart';
 import 'package:road_to_the_dream/features/tasks/presentation/widgets/category_card.dart';
 import 'package:road_to_the_dream/features/tasks/presentation/widgets/task_preview_row.dart';
 
@@ -110,6 +111,12 @@ class CategoriesPage extends StatelessWidget {
                 icon: const Icon(Icons.add_circle_outline),
                 iconSize: 72,
                 padding: Pad.zero,
+                onPressed: () => AutoRouter.of(context).pushNativeRoute(
+                  DialogRoute(
+                    context: context,
+                    builder: (context) => CreateCategoryDialog(),
+                  ),
+                ),
               ),
             ),
           ],
