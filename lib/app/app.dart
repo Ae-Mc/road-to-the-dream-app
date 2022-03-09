@@ -56,9 +56,7 @@ class App extends StatelessWidget {
                       MaterialStateProperty.all(state.colorTheme.onPrimary),
                   padding: MaterialStateProperty.all(const Pad(horizontal: 16)),
                   minimumSize: MaterialStateProperty.all(Size.zero),
-                  shape: MaterialStateProperty.all(const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(16)),
-                  )),
+                  shape: MaterialStateProperty.all(const StadiumBorder()),
                   textStyle: MaterialStateProperty.all(state.textTheme.title1),
                 ),
               ),
