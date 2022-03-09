@@ -11,6 +11,7 @@ abstract class AppColorTheme {
   Color get onPrimary;
   Color get primary;
   Color get secondary;
+  Color get shadow;
   Color get tertiary;
 }
 
@@ -32,6 +33,9 @@ class LightColorTheme implements AppColorTheme {
 
   @override
   Color get secondary => AppPallete.beige;
+
+  @override
+  Color get shadow => AppPallete.black30;
 
   @override
   Color get tertiary => AppPallete.lightBlue;
