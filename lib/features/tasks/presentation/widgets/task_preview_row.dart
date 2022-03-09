@@ -60,14 +60,14 @@ class TaskPreviewRow extends StatelessWidget {
       if (start.month == end.month) {
         return '${start.day}-${DateFormat("d MMMM").format(end)}';
       } else {
-        final format = DateFormat('MMMM y');
+        final format = DateFormat('d MMMM');
 
         return format.format(start) + ' - ' + format.format(end);
       }
     } else {
-      final format = DateFormat.yMd();
+      final format = DateFormat('d MMMM y');
 
-      return format.format(start) + '-' + format.format(end);
+      return format.format(start) + ' - ' + format.format(end);
     }
   }
 }
