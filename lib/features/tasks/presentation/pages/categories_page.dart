@@ -2,8 +2,7 @@ import 'package:assorted_layout_widgets/assorted_layout_widgets.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
-import 'package:logger/logger.dart';
+import 'package:road_to_the_dream/app/router/app_router.gr.dart';
 import 'package:road_to_the_dream/app/theme/bloc/app_theme.dart';
 import 'package:road_to_the_dream/features/tasks/domain/entities/category.dart';
 import 'package:road_to_the_dream/features/tasks/domain/entities/task.dart';
@@ -11,6 +10,7 @@ import 'package:road_to_the_dream/features/tasks/presentation/bloc/tasks_bloc.da
 import 'package:road_to_the_dream/features/tasks/presentation/bloc/tasks_state.dart';
 import 'package:road_to_the_dream/features/tasks/presentation/pages/create_category_dialog.dart';
 import 'package:road_to_the_dream/features/tasks/presentation/widgets/category_card.dart';
+import 'package:road_to_the_dream/features/tasks/presentation/widgets/styled_icon_button.dart';
 import 'package:road_to_the_dream/features/tasks/presentation/widgets/task_preview_row.dart';
 
 class CategoriesPage extends StatelessWidget {
@@ -33,15 +33,11 @@ class CategoriesPage extends StatelessWidget {
                     style: AppTheme.of(context).textTheme.headline1,
                   ),
                 ),
-                IconButton(
-                  onPressed: () => GetIt.I<Logger>().d('Open search page'),
-                  icon: Icon(
-                    Icons.search,
-                    color: AppTheme.of(context).colorTheme.secondary,
-                  ),
+                StyledIconButton(
+                  icon: Icons.search,
                   iconSize: 64,
-                  padding: Pad.zero,
-                  visualDensity: VisualDensity.compact,
+                  onPressed: () =>
+                      AutoRouter.of(context).push(const SearchCategoryRoute()),
                 ),
               ],
             ),
@@ -106,15 +102,13 @@ class CategoriesPage extends StatelessWidget {
               },
             ),
             Center(
-              child: IconButton(
-                color: AppTheme.of(context).colorTheme.secondary,
-                icon: const Icon(Icons.add_circle_outline),
+              child: StyledIconButton(
+                icon: Icons.add_circle_outline,
                 iconSize: 72,
-                padding: Pad.zero,
                 onPressed: () => AutoRouter.of(context).pushNativeRoute(
                   DialogRoute(
                     context: context,
-                    builder: (context) => CreateCategoryDialog(),
+                    builder: (context) => const CreateCategoryDialog(),
                   ),
                 ),
               ),
