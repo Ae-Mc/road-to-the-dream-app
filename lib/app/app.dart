@@ -31,10 +31,11 @@ class App extends StatelessWidget {
             routerDelegate: router.delegate(),
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
-              cardTheme: const CardTheme(
+              cardTheme: CardTheme(
+                color: state.colorTheme.secondary,
                 elevation: 8,
                 margin: Pad.zero,
-                shape: RoundedRectangleBorder(
+                shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(
                     Radius.circular(16),
                   ),
@@ -54,9 +55,13 @@ class App extends StatelessWidget {
                   elevation: MaterialStateProperty.all(8),
                   foregroundColor:
                       MaterialStateProperty.all(state.colorTheme.onPrimary),
-                  padding: MaterialStateProperty.all(const Pad(horizontal: 16)),
+                  padding: MaterialStateProperty.all(
+                    const Pad(horizontal: 16, vertical: 6),
+                  ),
                   minimumSize: MaterialStateProperty.all(Size.zero),
-                  shape: MaterialStateProperty.all(const StadiumBorder()),
+                  shape: MaterialStateProperty.all(const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(16)),
+                  )),
                   textStyle: MaterialStateProperty.all(state.textTheme.title1),
                 ),
               ),
