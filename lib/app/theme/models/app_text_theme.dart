@@ -5,6 +5,7 @@ import 'package:flutter/painting.dart';
 abstract class AppTextTheme {
   String get fontFamily;
 
+  TextStyle get body1Bold;
   TextStyle get body1Regular;
   TextStyle get headline1;
   TextStyle get headline2;
@@ -16,6 +17,14 @@ abstract class AppTextTheme {
 class DefaultTextTheme implements AppTextTheme {
   @override
   String get fontFamily => 'Rokkitt';
+
+  @override
+  TextStyle get body1Bold => const TextStyle(
+        fontFamily: 'Rokkitt',
+        fontSize: 14,
+        fontWeight: FontWeight.bold,
+        overflow: TextOverflow.ellipsis,
+      );
 
   @override
   TextStyle get body1Regular => const TextStyle(
