@@ -5,10 +5,12 @@ class StrokeText extends StatelessWidget {
   final TextStyle style;
   final Color strokeColor;
   final double strokeWidth;
+  final int? maxLines;
 
   const StrokeText(
     this.text, {
     Key? key,
+    this.maxLines,
     required this.style,
     required this.strokeColor,
     required this.strokeWidth,
@@ -20,10 +22,12 @@ class StrokeText extends StatelessWidget {
       children: [
         Text(
           text,
+          maxLines: maxLines,
           style: style,
         ),
         Text(
           text,
+          maxLines: maxLines,
           style: style.copyWith(
             foreground: Paint()
               ..strokeWidth = strokeWidth

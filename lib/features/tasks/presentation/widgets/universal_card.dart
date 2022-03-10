@@ -39,6 +39,7 @@ class UniversalCard extends StatelessWidget {
                   Expanded(
                     child: Text(
                       title,
+                      maxLines: 2,
                       style: AppTheme.of(context).textTheme.title1.copyWith(
                             color: AppTheme.of(context).colorTheme.primary,
                           ),
