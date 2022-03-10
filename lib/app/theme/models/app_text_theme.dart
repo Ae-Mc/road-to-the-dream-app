@@ -20,7 +20,7 @@ class DefaultTextTheme implements AppTextTheme {
   @override
   TextStyle get body1Regular => const TextStyle(
         fontFamily: 'Rokkitt',
-        fontSize: 16,
+        fontSize: 14,
         fontWeight: FontWeight.normal,
         overflow: TextOverflow.ellipsis,
       );
