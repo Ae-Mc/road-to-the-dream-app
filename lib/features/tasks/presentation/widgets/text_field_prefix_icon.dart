@@ -2,12 +2,12 @@ import 'package:assorted_layout_widgets/assorted_layout_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:road_to_the_dream/app/theme/bloc/app_theme.dart';
 
-class InputFieldPrefixIcon extends StatelessWidget {
+class TextFieldPrefixIcon extends StatelessWidget {
   final void Function()? onTap;
   final IconData icon;
   final double size;
 
-  const InputFieldPrefixIcon({
+  const TextFieldPrefixIcon({
     Key? key,
     this.onTap,
     required this.icon,
