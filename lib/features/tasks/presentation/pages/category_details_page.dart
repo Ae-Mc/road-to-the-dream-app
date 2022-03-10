@@ -9,6 +9,7 @@ import 'package:road_to_the_dream/app/theme/bloc/app_theme.dart';
 import 'package:road_to_the_dream/features/tasks/domain/entities/category.dart';
 import 'package:road_to_the_dream/features/tasks/presentation/bloc/tasks_bloc.dart';
 import 'package:road_to_the_dream/features/tasks/presentation/bloc/tasks_state.dart';
+import 'package:road_to_the_dream/features/tasks/presentation/pages/create_task_dialog.dart';
 import 'package:road_to_the_dream/features/tasks/presentation/widgets/styled_icon_button.dart';
 import 'package:road_to_the_dream/features/tasks/presentation/widgets/switcher_line.dart';
 import 'package:road_to_the_dream/features/tasks/presentation/widgets/task_card.dart';
@@ -66,7 +67,11 @@ class CategoryDetailsPage extends StatelessWidget {
                 child: StyledIconButton(
                   icon: Icons.add_circle_outline,
                   iconSize: 72,
-                  onPressed: () => GetIt.I<Logger>().d('Open add task page'),
+                  onPressed: () =>
+                      AutoRouter.of(context).pushNativeRoute(DialogRoute(
+                    context: context,
+                    builder: (_) => const CreateTaskDialog(),
+                  )),
                 ),
               ),
             ],
