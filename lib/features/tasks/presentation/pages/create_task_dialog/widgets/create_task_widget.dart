@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
 import 'package:road_to_the_dream/app/theme/bloc/app_theme.dart';
-import 'package:road_to_the_dream/features/tasks/presentation/pages/create_task_dialog/widgets/Input_row.dart';
+import 'package:road_to_the_dream/features/tasks/presentation/pages/create_task_dialog/widgets/input_row.dart';
 import 'package:road_to_the_dream/features/tasks/presentation/pages/create_task_dialog/widgets/separator_row.dart';
 import 'package:road_to_the_dream/features/tasks/presentation/widgets/stroke_text.dart';
 import 'package:road_to_the_dream/features/tasks/presentation/widgets/text_field_prefix_icon.dart';
