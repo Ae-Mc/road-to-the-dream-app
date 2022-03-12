@@ -2,9 +2,11 @@ import 'package:bloc/bloc.dart';
 import 'package:road_to_the_dream/features/tasks/domain/entities/category.dart';
 import 'package:road_to_the_dream/features/tasks/domain/entities/task.dart';
 import 'package:road_to_the_dream/features/tasks/domain/entities/uuid.dart';
+import 'package:injectable/injectable.dart';
 import 'package:road_to_the_dream/features/tasks/presentation/bloc/tasks_event.dart';
 import 'package:road_to_the_dream/features/tasks/presentation/bloc/tasks_state.dart';
 
+@injectable
 class TasksBloc extends Bloc<TasksEvent, TasksState> {
   TasksBloc()
       : super(
