@@ -5,9 +5,10 @@ part 'initialization_status.freezed.dart';
 class InitializationStatus with _$InitializationStatus {
   factory InitializationStatus({
     required bool intlInitialized,
+    required bool sharedPreferencesInitialized,
   }) = _InitializationStatus;
 
   InitializationStatus._();
 
-  List<bool> get statuses => [intlInitialized];
+  List<bool> get statuses => [intlInitialized, sharedPreferencesInitialized];
 }
