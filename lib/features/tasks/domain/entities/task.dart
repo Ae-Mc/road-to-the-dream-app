@@ -4,6 +4,7 @@ import 'package:road_to_the_dream/features/tasks/domain/entities/stage.dart';
 import 'package:road_to_the_dream/features/tasks/domain/entities/uuid.dart';
 
 part 'task.freezed.dart';
+part 'task.g.dart';
 
 @freezed
 class Task with _$Task {
@@ -14,6 +15,8 @@ class Task with _$Task {
     DateTime? start,
     DateTime? end,
   }) = _Task;
+
+  factory Task.fromJson(Map<String, dynamic> json) => _$_Task.fromJson(json);
 }
 
 extension TaskDateRange on Task {
