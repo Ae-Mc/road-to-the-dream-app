@@ -10,4 +10,7 @@ class UUID {
 
   String toJson() => uuid;
   const UUID.fromJson(String json) : uuid = json;
+
+  @override
+  String toString() => 'UUID($uuid)';
 }
