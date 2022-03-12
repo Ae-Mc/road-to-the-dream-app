@@ -6,6 +6,7 @@ import 'package:road_to_the_dream/app/router/app_router.gr.dart';
 import 'package:road_to_the_dream/app/theme/bloc/app_theme.dart';
 import 'package:road_to_the_dream/app/theme/bloc/app_theme_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:road_to_the_dream/app/theme/models/app_color_theme.dart';
 import 'package:road_to_the_dream/features/tasks/presentation/bloc/tasks_bloc.dart';
 
 class App extends StatelessWidget {
@@ -44,6 +45,7 @@ class App extends StatelessWidget {
               colorScheme: const ColorScheme.light().copyWith(
                 background: state.colorTheme.background,
                 brightness: state.colorTheme.brightness,
+                error: state.colorTheme.error,
                 onBackground: state.colorTheme.onBackground,
                 onPrimary: state.colorTheme.onPrimary,
                 primary: state.colorTheme.primary,
@@ -51,8 +53,8 @@ class App extends StatelessWidget {
               elevatedButtonTheme: ElevatedButtonThemeData(
                 style: ButtonStyle(
                   backgroundColor:
-                      MaterialStateProperty.all(state.colorTheme.primary),
-                  elevation: MaterialStateProperty.all(8),
+                      ElevatedButtonBackgroundColor(state.colorTheme),
+                  elevation: ElevatedButtonElevation(),
                   foregroundColor:
                       MaterialStateProperty.all(state.colorTheme.onPrimary),
                   padding: MaterialStateProperty.all(
@@ -85,5 +87,24 @@ class App extends StatelessWidget {
         },
       ),
     );
+  }
+}
+
+class ElevatedButtonBackgroundColor extends MaterialStateProperty<Color> {
+  final AppColorTheme colorTheme;
+  ElevatedButtonBackgroundColor(this.colorTheme);
+
+  @override
+  Color resolve(Set<MaterialState> states) {
+    return states.contains(MaterialState.disabled)
+        ? colorTheme.disabled
+        : colorTheme.primary;
+  }
+}
+
+class ElevatedButtonElevation extends MaterialStateProperty<double> {
+  @override
+  double resolve(Set<MaterialState> states) {
+    return states.contains(MaterialState.disabled) ? 0 : 8;
   }
 }
