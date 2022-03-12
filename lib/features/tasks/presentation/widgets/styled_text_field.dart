@@ -8,6 +8,8 @@ class StyledTextField extends StatelessWidget {
   final TextEditingController? controller;
   final Color fillColor;
   final String hintText;
+  final TextInputType? keyboardType;
+  final int? maxLines;
   final Widget? prefix;
   final Widget? prefixIcon;
   final TextInputAction textInputAction;
@@ -19,6 +21,8 @@ class StyledTextField extends StatelessWidget {
     this.controller,
     this.contentPadding = const Pad(horizontal: 24, vertical: 16),
     this.hintText = '',
+    this.keyboardType,
+    this.maxLines,
     this.prefix,
     this.prefixIcon,
     this.textInputAction = TextInputAction.done,
@@ -26,16 +30,24 @@ class StyledTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const BorderRadius borderRadius = BorderRadius.all(Radius.circular(24));
+
     return Stack(
       children: [
-        const Positioned.fill(child: Card(shape: StadiumBorder())),
+        const Positioned.fill(
+          child: Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: borderRadius,
+            ),
+          ),
+        ),
         TextField(
           controller: controller,
           cursorColor: AppTheme.of(context).colorTheme.primary,
           decoration: InputDecoration(
             border: const OutlineInputBorder(
               borderSide: BorderSide.none,
-              borderRadius: BorderRadius.all(Radius.circular(24)),
+              borderRadius: borderRadius,
             ),
             contentPadding: contentPadding,
             constraints: constraints,
@@ -47,12 +59,15 @@ class StyledTextField extends StatelessWidget {
                       AppTheme.of(context).colorTheme.primary.withOpacity(0.7),
                 ),
             isDense: true,
+            isCollapsed: true,
             prefix: prefix,
             prefixIconConstraints:
                 const BoxConstraints(minWidth: 0, minHeight: 0),
             prefixIcon: prefixIcon,
           ),
           expands: false,
+          keyboardType: keyboardType,
+          maxLines: maxLines,
           style: AppTheme.of(context).textTheme.body1Regular.copyWith(
                 color: AppTheme.of(context).colorTheme.primary,
               ),
