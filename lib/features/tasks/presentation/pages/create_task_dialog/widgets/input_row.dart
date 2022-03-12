@@ -5,27 +5,33 @@ import 'package:road_to_the_dream/features/tasks/presentation/widgets/stroke_tex
 import 'package:road_to_the_dream/features/tasks/presentation/widgets/styled_text_field.dart';
 
 class InputRow implements TableRow {
-  final Alignment alignment;
+  final Alignment textAlignment;
   final BuildContext context;
+  final TextEditingController? controller;
   final Widget? icon;
   @override
   final LocalKey? key;
+  final TextInputType? keyboardType;
+  final int? maxLines;
   final String label;
   final TextStyle? textStyle;
 
   InputRow({
     required this.context,
     required this.label,
-    this.alignment = Alignment.centerLeft,
+    this.textAlignment = Alignment.centerLeft,
+    this.controller,
     this.icon,
     this.key,
+    this.keyboardType,
+    this.maxLines,
     this.textStyle,
   }) : super();
 
   @override
   List<Widget>? get children => [
         Align(
-          alignment: alignment,
+          alignment: textAlignment,
           child: StrokeText(
             label,
             maxLines: 2,
@@ -36,12 +42,15 @@ class InputRow implements TableRow {
         ),
         const SizedBox(),
         StyledTextField(
+          controller: controller,
           fillColor: Color.lerp(
             AppTheme.of(context).colorTheme.secondary,
             AppTheme.of(context).colorTheme.tertiary,
             0.2,
           )!,
           contentPadding: const Pad(left: 8, vertical: 8),
+          keyboardType: keyboardType,
+          maxLines: maxLines,
           prefixIcon: Padding(padding: const Pad(right: 8), child: icon),
         ),
       ];
