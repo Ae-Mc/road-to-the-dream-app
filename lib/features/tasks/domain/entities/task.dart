@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:intl/intl.dart';
+import 'package:road_to_the_dream/features/tasks/domain/entities/stage.dart';
 import 'package:road_to_the_dream/features/tasks/domain/entities/uuid.dart';
 
 part 'task.freezed.dart';
@@ -9,6 +10,7 @@ class Task with _$Task {
   const factory Task({
     required UUID id,
     required String name,
+    @Default([]) List<Stage> stages,
     DateTime? start,
     DateTime? end,
   }) = _Task;
