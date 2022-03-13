@@ -66,7 +66,8 @@ class UniversalCard extends StatelessWidget {
                                 borderRadius: const BorderRadius.vertical(
                                   top: Radius.circular(16),
                                 ),
-                                onTap: onDelete,
+                                onTap: () =>
+                                    onPopupButtonTap(context, onDelete),
                                 child: Text(
                                   'Delete',
                                   style: AppTheme.of(context).textTheme.title2,
@@ -89,7 +90,8 @@ class UniversalCard extends StatelessWidget {
                                 borderRadius: const BorderRadius.vertical(
                                   bottom: Radius.circular(16),
                                 ),
-                                onTap: onRename,
+                                onTap: () =>
+                                    onPopupButtonTap(context, onRename),
                                 child: Text(
                                   'Rename',
                                   style: AppTheme.of(context).textTheme.title2,
@@ -121,5 +123,10 @@ class UniversalCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void onPopupButtonTap(BuildContext context, void Function() callback) {
+    Navigator.of(context).pop();
+    callback();
   }
 }

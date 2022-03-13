@@ -25,14 +25,12 @@ class CategoryCard extends StatelessWidget {
   }
 
   void deleteCategory(BuildContext context) {
+    //TODO
     GetIt.I<Logger>().d('Delete category');
-
-    Navigator.of(context).pop();
   }
 
   void renameCategory(BuildContext context) {
+    // TODO
     GetIt.I<Logger>().d('Rename category');
-
-    Navigator.of(context).pop();
   }
 }
