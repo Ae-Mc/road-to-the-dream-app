@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:logger/logger.dart';
 import 'package:road_to_the_dream/app/theme/bloc/app_theme.dart';
-import 'package:road_to_the_dream/features/tasks/presentation/pages/create_task_dialog/widgets/date_input_row.dart';
 import 'package:road_to_the_dream/features/tasks/presentation/pages/create_task_dialog/widgets/input_row.dart';
 import 'package:road_to_the_dream/features/tasks/presentation/pages/create_task_dialog/widgets/separator_row.dart';
+import 'package:road_to_the_dream/features/tasks/presentation/utils/date_editing_controller.dart';
 import 'package:road_to_the_dream/features/tasks/presentation/widgets/stroke_text.dart';
+import 'package:road_to_the_dream/features/tasks/presentation/widgets/text_field_prefix_icon.dart';
 
 class CreateStageWidget extends StatefulWidget {
   final int stageNumber;
@@ -28,23 +31,27 @@ class CreateStageWidget extends StatefulWidget {
 
 class _CreateStageWidgetState extends State<CreateStageWidget> {
   final TextEditingController descriptionController = TextEditingController();
+  final DateEditingController fromController = DateEditingController();
   final TextEditingController nameController = TextEditingController();
-  DateTime? from;
-  DateTime? to;
+  final DateEditingController toController = DateEditingController();
   String? error;
 
   @override
   void initState() {
     updateVariables();
     descriptionController.addListener(() => setState(updateVariables));
+    fromController.addListener(() => setState(updateVariables));
     nameController.addListener(() => setState(updateVariables));
+    toController.addListener(() => setState(updateVariables));
     super.initState();
   }
 
   @override
   void dispose() {
     descriptionController.dispose();
+    fromController.dispose();
     nameController.dispose();
+    toController.dispose();
     super.dispose();
   }
 
@@ -86,35 +93,31 @@ class _CreateStageWidgetState extends State<CreateStageWidget> {
               ],
             ),
             SeparatorRow(),
-            DateInputRow(
+            InputRow(
               textAlignment: Alignment.centerRight,
               context: context,
+              controller: fromController,
               label: 'from:',
               textStyle: AppTheme.of(context).textTheme.body1Bold,
-              onEmptyInput: () => onParsedDateInput(
-                () => from = null,
-                "Wrong date in field from",
-              ),
-              onWrongInput: () =>
-                  setState(() => error = "Wrong date in field from"),
-              onParsedInput: (parsed) => onParsedDateInput(
-                () => from = parsed,
-                "Wrong date in field from",
+              keyboardType: TextInputType.datetime,
+              icon: TextFieldPrefixIcon(
+                icon: Icons.calendar_today,
+                size: 31,
+                onTap: () => GetIt.I<Logger>().d('Open date picker'),
               ),
             ),
             SeparatorRow(),
-            DateInputRow(
-              textAlignment: Alignment.centerRight,
+            InputRow(
               context: context,
+              controller: toController,
               label: 'to:',
+              textAlignment: Alignment.centerRight,
               textStyle: AppTheme.of(context).textTheme.body1Bold,
-              onEmptyInput: () =>
-                  onParsedDateInput(() => to = null, "Wrong date in field to"),
-              onWrongInput: () =>
-                  setState(() => error = "Wrong date in field to"),
-              onParsedInput: (parsed) => onParsedDateInput(
-                () => to = parsed,
-                "Wrong date in field to",
+              keyboardType: TextInputType.datetime,
+              icon: TextFieldPrefixIcon(
+                icon: Icons.calendar_today,
+                size: 31,
+                onTap: () => GetIt.I<Logger>().d('Open date picker'),
               ),
             ),
             SeparatorRow(),
@@ -143,9 +146,9 @@ class _CreateStageWidgetState extends State<CreateStageWidget> {
               ? null
               : () => widget.onNext(
                     description: descriptionController.text,
-                    from: from,
+                    from: fromController.date,
                     name: nameController.text,
-                    to: to,
+                    to: toController.date,
                   ),
           child: Text(widget.isLastStage ? 'OK' : 'Next'),
         ),
@@ -156,6 +159,18 @@ class _CreateStageWidgetState extends State<CreateStageWidget> {
   void updateVariables() {
     if (nameController.text.isEmpty) {
       error = "Name can't be empty";
+
+      return;
+    }
+
+    if (fromController.text.isNotEmpty && fromController.date == null) {
+      error = "Wrong date in field from";
+
+      return;
+    }
+
+    if (toController.text.isNotEmpty && toController.date == null) {
+      error = "Wrong date in field to";
 
       return;
     }

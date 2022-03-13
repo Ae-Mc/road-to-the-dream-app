@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:logger/logger.dart';
 import 'package:road_to_the_dream/app/theme/bloc/app_theme.dart';
-import 'package:road_to_the_dream/features/tasks/presentation/pages/create_task_dialog/widgets/date_input_row.dart';
+import 'package:road_to_the_dream/features/tasks/presentation/utils/date_editing_controller.dart';
 import 'package:road_to_the_dream/features/tasks/presentation/pages/create_task_dialog/widgets/input_row.dart';
 import 'package:road_to_the_dream/features/tasks/presentation/pages/create_task_dialog/widgets/separator_row.dart';
 import 'package:road_to_the_dream/features/tasks/presentation/widgets/stroke_text.dart';
@@ -21,26 +23,30 @@ class CreateTaskWidget extends StatefulWidget {
 }
 
 class _CreateTaskWidgetState extends State<CreateTaskWidget> {
+  final DateEditingController fromController = DateEditingController();
   final TextEditingController nameController = TextEditingController();
-  DateTime? from;
-  DateTime? to;
   final TextEditingController stagesController =
       TextEditingController(text: '0');
   int stagesCount = 0;
+  final DateEditingController toController = DateEditingController();
   String? error;
 
   @override
   void initState() {
     updateVariables();
+    fromController.addListener(() => setState(updateVariables));
     nameController.addListener(() => setState(updateVariables));
     stagesController.addListener(() => setState(updateVariables));
+    toController.addListener(() => setState(updateVariables));
     super.initState();
   }
 
   @override
   void dispose() {
+    fromController.dispose();
     nameController.dispose();
     stagesController.dispose();
+    toController.dispose();
     super.dispose();
   }
 
@@ -83,35 +89,31 @@ class _CreateTaskWidgetState extends State<CreateTaskWidget> {
               ],
             ),
             SeparatorRow(),
-            DateInputRow(
+            InputRow(
               textAlignment: Alignment.centerRight,
               context: context,
+              controller: fromController,
               label: 'from:',
               textStyle: AppTheme.of(context).textTheme.body1Bold,
-              onEmptyInput: () => onParsedDateInput(
-                () => from = null,
-                "Wrong date in field from",
-              ),
-              onWrongInput: () =>
-                  setState(() => error = "Wrong date in field from"),
-              onParsedInput: (parsed) => onParsedDateInput(
-                () => from = parsed,
-                "Wrong date in field from",
+              keyboardType: TextInputType.datetime,
+              icon: TextFieldPrefixIcon(
+                icon: Icons.calendar_today,
+                size: 31,
+                onTap: () => GetIt.I<Logger>().d('Open date picker'),
               ),
             ),
             SeparatorRow(),
-            DateInputRow(
+            InputRow(
               context: context,
+              controller: toController,
               label: 'to:',
               textAlignment: Alignment.centerRight,
               textStyle: AppTheme.of(context).textTheme.body1Bold,
-              onEmptyInput: () =>
-                  onParsedDateInput(() => to = null, "Wrong date in field to"),
-              onWrongInput: () =>
-                  setState(() => error = "Wrong date in field to"),
-              onParsedInput: (parsed) => onParsedDateInput(
-                () => to = parsed,
-                "Wrong date in field to",
+              keyboardType: TextInputType.datetime,
+              icon: TextFieldPrefixIcon(
+                icon: Icons.calendar_today,
+                size: 31,
+                onTap: () => GetIt.I<Logger>().d('Open date picker'),
               ),
             ),
             SeparatorRow(),
@@ -144,8 +146,8 @@ class _CreateTaskWidgetState extends State<CreateTaskWidget> {
           onPressed: error == null
               ? () => widget.onNext(
                     name: nameController.text,
-                    from: from,
-                    to: to,
+                    from: fromController.date,
+                    to: toController.date,
                     stagesCount: stagesCount,
                   )
               : null,
@@ -163,6 +165,7 @@ class _CreateTaskWidgetState extends State<CreateTaskWidget> {
     }
 
     final stages = int.tryParse(stagesController.text);
+    stagesCount = stages ?? stagesCount;
 
     if (stages == null) {
       error = "Number of stages field can contain only integer numbers";
@@ -170,15 +173,18 @@ class _CreateTaskWidgetState extends State<CreateTaskWidget> {
       return;
     }
 
-    stagesCount = stages;
+    if (fromController.text.isNotEmpty && fromController.date == null) {
+      error = "Wrong date in field from";
+
+      return;
+    }
+
+    if (toController.text.isNotEmpty && toController.date == null) {
+      error = "Wrong date in field to";
+
+      return;
+    }
 
     error = null;
-  }
-
-  void onParsedDateInput(void Function() set, String errorText) {
-    set();
-    if (error == errorText) {
-      error = null;
-    }
   }
 }
