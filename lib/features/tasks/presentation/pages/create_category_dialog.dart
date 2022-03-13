@@ -19,21 +19,36 @@ class CreateCategoryDialog extends StatefulWidget {
 class _CreateCategoryDialogState extends State<CreateCategoryDialog> {
   final TextEditingController categoryNameController = TextEditingController();
   final TextEditingController categoryColorController = TextEditingController();
+  Set<_ErrorType> errors = {_ErrorType.nameIsEmpty};
 
   @override
   void initState() {
-    categoryColorController.addListener(() => setState(() => {}));
+    categoryNameController.addListener(
+      () => setState(
+        () => categoryNameController.text.isEmpty
+            ? errors.add(_ErrorType.nameIsEmpty)
+            : errors.remove(_ErrorType.nameIsEmpty),
+      ),
+    );
+    categoryColorController.addListener(() => setState(() =>
+        getCurrentColor() == Colors.transparent
+            ? errors.add(_ErrorType.invalidColor)
+            : errors.remove(_ErrorType.invalidColor)));
     super.initState();
   }
 
   @override
   void dispose() {
     categoryColorController.dispose();
+    categoryNameController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final colorTheme = AppTheme.of(context).colorTheme;
+    final textTheme = AppTheme.of(context).textTheme;
+
     return BackdropFilter(
       filter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
       child: IntrinsicWidth(
@@ -47,7 +62,7 @@ class _CreateCategoryDialogState extends State<CreateCategoryDialog> {
               Container(
                 decoration: BoxDecoration(
                   borderRadius: const BorderRadius.all(Radius.circular(16)),
-                  color: AppTheme.of(context).colorTheme.tertiary,
+                  color: colorTheme.tertiary,
                 ),
                 padding: const Pad(all: 16),
                 child: Column(
@@ -56,12 +71,12 @@ class _CreateCategoryDialogState extends State<CreateCategoryDialog> {
                     SizedBox(
                       width: double.infinity,
                       child: Card(
-                        color: AppTheme.of(context).colorTheme.secondary,
+                        color: colorTheme.secondary,
                         shape: const StadiumBorder(),
                         child: Text(
                           'Create category',
-                          style: AppTheme.of(context).textTheme.title1.copyWith(
-                                color: AppTheme.of(context).colorTheme.primary,
+                          style: textTheme.title1.copyWith(
+                            color: colorTheme.primary,
                               ),
                           textAlign: TextAlign.center,
                         ),
@@ -69,11 +84,7 @@ class _CreateCategoryDialogState extends State<CreateCategoryDialog> {
                     ),
                     const SizedBox(height: 16),
                     Table(
-                      columnWidths: const {
-                        0: FlexColumnWidth(),
-                        1: FixedColumnWidth(16),
-                        2: FlexColumnWidth(),
-                      },
+                      columnWidths: const {1: FixedColumnWidth(16)},
                       defaultVerticalAlignment:
                           TableCellVerticalAlignment.middle,
                       children: [
@@ -81,13 +92,8 @@ class _CreateCategoryDialogState extends State<CreateCategoryDialog> {
                           children: [
                             StrokeText(
                               'Category name',
-                              style: AppTheme.of(context)
-                                  .textTheme
-                                  .title3
-                                  .copyWith(
-                                    color: AppTheme.of(context)
-                                        .colorTheme
-                                        .tertiary,
+                              style: textTheme.title3.copyWith(
+                                color: colorTheme.tertiary,
                                   ),
                               strokeColor:
                                   AppTheme.of(context).colorTheme.primary,
@@ -99,8 +105,8 @@ class _CreateCategoryDialogState extends State<CreateCategoryDialog> {
                                   const Pad(horizontal: 16, vertical: 8),
                               controller: categoryNameController,
                               fillColor: Color.lerp(
-                                AppTheme.of(context).colorTheme.secondary,
-                                AppTheme.of(context).colorTheme.tertiary,
+                                colorTheme.secondary,
+                                colorTheme.tertiary,
                                 0.2,
                               )!,
                               textInputAction: TextInputAction.next,
@@ -117,16 +123,10 @@ class _CreateCategoryDialogState extends State<CreateCategoryDialog> {
                           children: [
                             StrokeText(
                               'Color',
-                              style: AppTheme.of(context)
-                                  .textTheme
-                                  .title3
-                                  .copyWith(
-                                    color: AppTheme.of(context)
-                                        .colorTheme
-                                        .tertiary,
+                              style: textTheme.title3.copyWith(
+                                color: colorTheme.tertiary,
                                   ),
-                              strokeColor:
-                                  AppTheme.of(context).colorTheme.primary,
+                              strokeColor: colorTheme.primary,
                               strokeWidth: 1,
                             ),
                             const SizedBox(width: 16),
@@ -135,8 +135,8 @@ class _CreateCategoryDialogState extends State<CreateCategoryDialog> {
                                   const Pad(horizontal: 16, vertical: 8),
                               controller: categoryColorController,
                               fillColor: Color.lerp(
-                                AppTheme.of(context).colorTheme.secondary,
-                                AppTheme.of(context).colorTheme.tertiary,
+                                colorTheme.secondary,
+                                colorTheme.tertiary,
                                 0.2,
                               )!,
                               prefix: Text(getPrefixText()),
@@ -155,15 +155,23 @@ class _CreateCategoryDialogState extends State<CreateCategoryDialog> {
                       ],
                     ),
                     const SizedBox(height: 16),
-                    SizedBox(
-                      width: double.infinity,
-                      child: Padding(
-                        padding: const Pad(horizontal: 32),
-                        child: ElevatedButton(
-                          onPressed: () => createCategory(context),
-                          child: const Text('OK'),
-                        ),
+                    if (errors.isNotEmpty) ...[
+                      Text(
+                        errors.contains(_ErrorType.nameIsEmpty)
+                            ? "Name can't be empty"
+                            : errors.contains(_ErrorType.invalidColor)
+                                ? "Invalid color"
+                                : "",
+                        style: textTheme.body1Bold
+                            .copyWith(color: colorTheme.error),
+                        textAlign: TextAlign.center,
                       ),
+                      const SizedBox(height: 16),
+                    ],
+                    ElevatedButton(
+                      onPressed:
+                          errors.isEmpty ? () => createCategory(context) : null,
+                          child: const Text('OK'),
                     ),
                   ],
                 ),
@@ -194,11 +202,7 @@ class _CreateCategoryDialogState extends State<CreateCategoryDialog> {
   }
 
   String getPrefixText() {
-    return '#' +
-        List.generate(
-          max(6 - categoryColorController.text.length, 0),
-          (_) => '0',
-        ).join();
+    return '#' + '0' * max(6 - categoryColorController.text.length, 0);
   }
 
   void createCategory(BuildContext context) {
@@ -206,3 +210,5 @@ class _CreateCategoryDialogState extends State<CreateCategoryDialog> {
     Navigator.of(context).pop();
   }
 }
+
+enum _ErrorType { invalidColor, nameIsEmpty }
