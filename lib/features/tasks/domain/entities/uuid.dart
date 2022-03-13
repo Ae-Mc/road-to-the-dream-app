@@ -12,5 +12,13 @@ class UUID {
   const UUID.fromJson(String json) : uuid = json;
 
   @override
+  int get hashCode => uuid.hashCode;
+
+  @override
   String toString() => 'UUID($uuid)';
+
+  @override
+  bool operator ==(Object other) => other is UUID ? uuid == other.uuid : false;
+
+  UUID copyWith({required String uuid}) => UUID(uuid: uuid);
 }
