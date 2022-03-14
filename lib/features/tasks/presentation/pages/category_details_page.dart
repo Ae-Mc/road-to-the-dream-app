@@ -23,100 +23,103 @@ class CategoryDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TasksBloc, TasksState>(
-      builder: (context, state) {
-        final category =
-            state.categories.firstWhere((element) => element.id == categoryID);
+      builder: (context, state) => state.when(
+        loaded: (categories) {
+          final category =
+              categories.firstWhere((element) => element.id == categoryID);
 
-        return Stack(
-          children: [
-            ListView(
-              padding: const Pad(all: 16, bottom: 32),
-              children: [
-                Row(
-                  children: [
-                    StyledIconButton(
-                      icon: Icons.arrow_back,
-                      iconSize: 32,
-                      onPressed: Navigator.of(context).pop,
-                    ),
-                    const SizedBox(width: 16),
-                    Expanded(
-                      child: Text(
-                        'Tasks',
-                        style: AppTheme.of(context).textTheme.headline1,
+          return Stack(
+            children: [
+              ListView(
+                padding: const Pad(all: 16, bottom: 32),
+                children: [
+                  Row(
+                    children: [
+                      StyledIconButton(
+                        icon: Icons.arrow_back,
+                        iconSize: 32,
+                        onPressed: Navigator.of(context).pop,
                       ),
-                    ),
-                    const SizedBox(width: 16),
-                    StyledIconButton(
-                      icon: Icons.search,
-                      iconSize: 32,
-                      onPressed: () =>
-                          GetIt.I<Logger>().d('Open task search page'),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 8),
-                ...category.tasks
-                    .map((e) => Padding(
-                          padding: const Pad(vertical: 8),
-                          child: TaskCard(
-                            task: e,
-                            color: Color(category.color + 0xFF000000),
-                          ),
-                        ))
-                    .toList(),
-                const SizedBox(height: 8),
-                Center(
-                  child: StyledIconButton(
-                    icon: Icons.add_circle_outline,
-                    iconSize: 72,
-                    onPressed: () =>
-                        AutoRouter.of(context).pushNativeRoute(DialogRoute(
-                      context: context,
-                      builder: (_) => CreateTaskDialog(categoryID: categoryID),
-                    )),
-                  ),
-                ),
-              ],
-            ),
-            Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: LayoutBuilder(
-                builder: (context, constraints) =>
-                    BlocBuilder<TasksBloc, TasksState>(
-                  builder: (context, state) => state.when(
-                    loaded: (categories) {
-                      final categoryWidth = constraints.maxWidth / 3;
-                      final orderedCategories = [
-                        category,
-                        ...categories
-                            .where((element) => element.id != category.id),
-                      ];
-
-                      return SwitcherLine(
-                        tiles: orderedCategories
-                            .map((e) => TextAndColor(
-                                  text: e.name,
-                                  color: Color(e.color + 0xFF000000),
-                                ))
-                            .toList(),
-                        tileWidth: categoryWidth,
-                        onTileTap: (index) => AutoRouter.of(context).replace(
-                          CategoryDetailsRoute(
-                            categoryID: orderedCategories[index].id,
-                          ),
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: Text(
+                          'Tasks',
+                          style: AppTheme.of(context).textTheme.headline1,
                         ),
-                      );
-                    },
+                      ),
+                      const SizedBox(width: 16),
+                      StyledIconButton(
+                        icon: Icons.search,
+                        iconSize: 32,
+                        onPressed: () =>
+                            GetIt.I<Logger>().d('Open task search page'),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  ...category.tasks
+                      .map((e) => Padding(
+                            padding: const Pad(vertical: 8),
+                            child: TaskCard(
+                              task: e,
+                              color: Color(category.color + 0xFF000000),
+                            ),
+                          ))
+                      .toList(),
+                  const SizedBox(height: 8),
+                  Center(
+                    child: StyledIconButton(
+                      icon: Icons.add_circle_outline,
+                      iconSize: 72,
+                      onPressed: () =>
+                          AutoRouter.of(context).pushNativeRoute(DialogRoute(
+                        context: context,
+                        builder: (_) =>
+                            CreateTaskDialog(categoryID: categoryID),
+                      )),
+                    ),
+                  ),
+                ],
+              ),
+              Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: LayoutBuilder(
+                  builder: (context, constraints) =>
+                      BlocBuilder<TasksBloc, TasksState>(
+                    builder: (context, state) => state.when(
+                      loaded: (categories) {
+                        final categoryWidth = constraints.maxWidth / 3;
+                        final orderedCategories = [
+                          category,
+                          ...categories
+                              .where((element) => element.id != category.id),
+                        ];
+
+                        return SwitcherLine(
+                          tiles: orderedCategories
+                              .map((e) => TextAndColor(
+                                    text: e.name,
+                                    color: Color(e.color + 0xFF000000),
+                                  ))
+                              .toList(),
+                          tileWidth: categoryWidth,
+                          onTileTap: (index) => AutoRouter.of(context).replace(
+                            CategoryDetailsRoute(
+                              categoryID: orderedCategories[index].id,
+                            ),
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
-        );
-      },
+            ],
+          );
+        },
+      ),
     );
   }
 }
