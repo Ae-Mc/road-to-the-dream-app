@@ -32,7 +32,7 @@ class TaskPreviewRow extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(task.name, style: AppTheme.of(context).textTheme.title2),
-              if (task.start != null)
+              if (task.from != null)
                 Text(
                   task.getDateRangeString(),
                   style: AppTheme.of(context)

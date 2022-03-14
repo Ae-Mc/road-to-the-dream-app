@@ -53,40 +53,31 @@ class CategoriesPage extends StatelessWidget {
             ...state.when<List<Widget>>(
               loaded: (categories) {
                 final now = DateTime.now();
-                final List<MapEntry<Category, Task>> todayTasks = [];
-
-                for (final category in categories) {
-                  for (final task in category.tasks) {
-                    final start = task.start;
-                    if (start == null) {
-                      continue;
-                    }
-
-                    final end = task.end;
-                    if (end == null) {
-                      if (now.isSameDate(start)) {
-                        todayTasks.add(MapEntry(category, task));
-                      }
-                    } else {
-                      if (now.compareTo(start) >= 0 &&
-                          now.compareTo(end) <= 0) {
-                        todayTasks.add(MapEntry(category, task));
-                      }
-                    }
-                  }
-                }
+                final todayTasks = categories
+                    .map((category) => category.tasks
+                        .where((task) =>
+                            task.from != null &&
+                            (now.isSameDate(task.from!) ||
+                                task.to != null &&
+                                    now.compareTo(task.from!) >= 0 &&
+                                    now.compareTo(task.to!) <= 0))
+                        .map((task) => MapEntry(category, task)))
+                    .fold<List<MapEntry<Category, Task>>>(
+                  [],
+                  (previousValue, element) => [...previousValue, ...element],
+                );
 
                 return todayTasks.isNotEmpty
                     ? [
                         Text('Today', style: textTheme.headline2),
                         const SizedBox(height: 10),
                         ...todayTasks
-                            .map((e) => Padding(
+                            .map((task) => Padding(
                                   padding: const Pad(vertical: 6),
                                   child: TaskPreviewRow(
-                                    task: e.value,
+                                    task: task.value,
                                     categoryColor:
-                                        Color(0xFF000000 + e.key.color),
+                                        Color(0xFF000000 + task.key.color),
                                   ),
                                 ))
                             .toList(),

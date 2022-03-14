@@ -134,7 +134,7 @@ class _CreateTaskDialogState extends State<CreateTaskDialog>
     DateTime? from,
     DateTime? to,
   }) {
-    task = Task(id: UUID(), name: name, start: from, end: to);
+    task = Task(id: UUID(), name: name, from: from, to: to);
 
     if (stagesCount == 0) {
       BlocProvider.of<TasksBloc>(context)
