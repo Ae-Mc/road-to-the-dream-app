@@ -19,13 +19,13 @@ abstract class AppTextTheme {
 
 class DefaultTextTheme implements AppTextTheme {
   @override
-  final fontFamily = 'Rokkitt';
+  get fontFamily => 'Rokkitt';
 
   @override
-  final strokeWidth = 1;
+  get strokeWidth => 2;
 
   @override
-  TextStyle get body1Bold => const TextStyle(
+  get body1Bold => const TextStyle(
         fontFamily: 'Rokkitt',
         fontSize: 14,
         fontWeight: FontWeight.bold,
@@ -33,7 +33,7 @@ class DefaultTextTheme implements AppTextTheme {
       );
 
   @override
-  TextStyle get body1Regular => const TextStyle(
+  get body1Regular => const TextStyle(
         fontFamily: 'Rokkitt',
         fontSize: 14,
         fontWeight: FontWeight.normal,
@@ -41,7 +41,7 @@ class DefaultTextTheme implements AppTextTheme {
       );
 
   @override
-  TextStyle get caption => const TextStyle(
+  get caption => const TextStyle(
         fontFamily: 'Rokkitt',
         fontSize: 10,
         fontWeight: FontWeight.normal,
@@ -49,21 +49,21 @@ class DefaultTextTheme implements AppTextTheme {
       );
 
   @override
-  TextStyle get headline1 => const TextStyle(
+  get headline1 => const TextStyle(
         fontFamily: 'Headland One',
         fontSize: 36,
         overflow: TextOverflow.ellipsis,
       );
 
   @override
-  TextStyle get headline2 => const TextStyle(
+  get headline2 => const TextStyle(
         fontFamily: 'Headland One',
         fontSize: 24,
         overflow: TextOverflow.ellipsis,
       );
 
   @override
-  TextStyle get title1 => const TextStyle(
+  get title1 => const TextStyle(
         fontFamily: 'Rokkitt',
         fontSize: 24,
         fontWeight: FontWeight.bold,
@@ -71,7 +71,7 @@ class DefaultTextTheme implements AppTextTheme {
       );
 
   @override
-  TextStyle get title2 => const TextStyle(
+  get title2 => const TextStyle(
         fontFamily: 'Rokkitt',
         fontSize: 18,
         fontWeight: FontWeight.bold,
@@ -79,7 +79,7 @@ class DefaultTextTheme implements AppTextTheme {
       );
 
   @override
-  TextStyle get title3 => const TextStyle(
+  get title3 => const TextStyle(
         fontFamily: 'Rokkitt',
         fontSize: 16,
         fontWeight: FontWeight.bold,
