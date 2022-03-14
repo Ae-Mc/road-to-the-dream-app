@@ -17,9 +17,7 @@ class SplashLoading extends StatelessWidget {
           height: 48,
           width: 48,
           child: CircularProgressIndicator.adaptive(
-            valueColor: AlwaysStoppedAnimation(
-              AppTheme.of(context).colorTheme.primary,
-            ),
+            valueColor: AlwaysStoppedAnimation(colorTheme.primary),
           ),
         ),
       ],

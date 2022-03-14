@@ -23,6 +23,9 @@ class UniversalCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorTheme = AppTheme.of(context).colorTheme;
+    final textTheme = AppTheme.of(context).textTheme;
+
     return Card(
       color: color,
       child: InkWell(
@@ -40,9 +43,8 @@ class UniversalCard extends StatelessWidget {
                     child: Text(
                       title,
                       maxLines: 2,
-                      style: AppTheme.of(context).textTheme.title1.copyWith(
-                            color: AppTheme.of(context).colorTheme.primary,
-                          ),
+                      style:
+                          textTheme.title1.copyWith(color: colorTheme.primary),
                     ),
                   ),
                   PopupMenuButton(
@@ -55,7 +57,7 @@ class UniversalCard extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
                             Card(
-                              color: AppTheme.of(context).colorTheme.primary,
+                              color: colorTheme.primary,
                               elevation: 0,
                               shape: const RoundedRectangleBorder(
                                 borderRadius: BorderRadius.vertical(
@@ -70,15 +72,15 @@ class UniversalCard extends StatelessWidget {
                                     onPopupButtonTap(context, onDelete),
                                 child: Text(
                                   'Delete',
-                                  style: AppTheme.of(context).textTheme.title2,
+                                  style: textTheme.title2,
                                   textAlign: TextAlign.center,
                                 ),
                               ),
                             ),
                             Card(
                               color: Color.lerp(
-                                AppTheme.of(context).colorTheme.primary,
-                                AppTheme.of(context).colorTheme.onPrimary,
+                                colorTheme.primary,
+                                colorTheme.onPrimary,
                                 0.1,
                               ),
                               shape: const RoundedRectangleBorder(
@@ -94,7 +96,7 @@ class UniversalCard extends StatelessWidget {
                                     onPopupButtonTap(context, onRename),
                                 child: Text(
                                   'Rename',
-                                  style: AppTheme.of(context).textTheme.title2,
+                                  style: textTheme.title2,
                                   textAlign: TextAlign.center,
                                 ),
                               ),
@@ -111,12 +113,12 @@ class UniversalCard extends StatelessWidget {
               const SizedBox(height: 16),
               StrokeText(
                 subtitle,
-                style: AppTheme.of(context).textTheme.body1Regular.copyWith(
-                      color: AppTheme.of(context).colorTheme.onPrimary,
-                      fontWeight: FontWeight.bold,
-                    ),
+                style: textTheme.body1Regular.copyWith(
+                  color: colorTheme.onPrimary,
+                  fontWeight: FontWeight.bold,
+                ),
                 strokeWidth: 0.5,
-                strokeColor: AppTheme.of(context).colorTheme.primary,
+                strokeColor: colorTheme.primary,
               ),
             ],
           ),

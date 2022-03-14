@@ -100,8 +100,7 @@ class _CreateCategoryDialogState extends State<CreateCategoryDialog> {
                               style: textTheme.title3.copyWith(
                                 color: colorTheme.tertiary,
                               ),
-                              strokeColor:
-                                  AppTheme.of(context).colorTheme.primary,
+                              strokeColor: colorTheme.primary,
                               strokeWidth: 1,
                             ),
                             const SizedBox(width: 16),

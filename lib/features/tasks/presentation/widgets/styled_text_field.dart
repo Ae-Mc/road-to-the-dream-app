@@ -31,6 +31,8 @@ class StyledTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const BorderRadius borderRadius = BorderRadius.all(Radius.circular(24));
+    final colorTheme = AppTheme.of(context).colorTheme;
+    final textTheme = AppTheme.of(context).textTheme;
 
     return Stack(
       children: [
@@ -43,7 +45,7 @@ class StyledTextField extends StatelessWidget {
         ),
         TextField(
           controller: controller,
-          cursorColor: AppTheme.of(context).colorTheme.primary,
+          cursorColor: colorTheme.primary,
           decoration: InputDecoration(
             border: const OutlineInputBorder(
               borderSide: BorderSide.none,
@@ -54,10 +56,9 @@ class StyledTextField extends StatelessWidget {
             filled: true,
             fillColor: fillColor,
             hintText: hintText,
-            hintStyle: AppTheme.of(context).textTheme.body1Regular.copyWith(
-                  color:
-                      AppTheme.of(context).colorTheme.primary.withOpacity(0.7),
-                ),
+            hintStyle: textTheme.body1Regular.copyWith(
+              color: colorTheme.primary.withOpacity(0.7),
+            ),
             isDense: true,
             isCollapsed: true,
             prefix: prefix,
@@ -68,9 +69,7 @@ class StyledTextField extends StatelessWidget {
           expands: false,
           keyboardType: keyboardType,
           maxLines: maxLines,
-          style: AppTheme.of(context).textTheme.body1Regular.copyWith(
-                color: AppTheme.of(context).colorTheme.primary,
-              ),
+          style: textTheme.body1Regular.copyWith(color: colorTheme.primary),
           textInputAction: textInputAction,
         ),
       ],

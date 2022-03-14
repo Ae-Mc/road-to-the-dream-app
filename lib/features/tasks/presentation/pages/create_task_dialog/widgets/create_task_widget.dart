@@ -52,6 +52,9 @@ class _CreateTaskWidgetState extends State<CreateTaskWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final colorTheme = AppTheme.of(context).colorTheme;
+    final textTheme = AppTheme.of(context).textTheme;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -59,9 +62,7 @@ class _CreateTaskWidgetState extends State<CreateTaskWidget> {
           elevation: 0,
           child: Text(
             'Create task',
-            style: AppTheme.of(context).textTheme.title1.copyWith(
-                  color: AppTheme.of(context).colorTheme.primary,
-                ),
+            style: textTheme.title1.copyWith(color: colorTheme.primary),
             textAlign: TextAlign.center,
           ),
         ),
@@ -80,9 +81,9 @@ class _CreateTaskWidgetState extends State<CreateTaskWidget> {
               children: [
                 StrokeText(
                   'Deadlines',
-                  strokeColor: AppTheme.of(context).colorTheme.primary,
-                  strokeWidth: 0.5,
-                  style: AppTheme.of(context).textTheme.title3,
+                  strokeColor: colorTheme.primary,
+                  strokeWidth: textTheme.strokeWidth,
+                  style: textTheme.title3,
                 ),
                 const SizedBox(),
                 const SizedBox(),
@@ -94,7 +95,7 @@ class _CreateTaskWidgetState extends State<CreateTaskWidget> {
               context: context,
               controller: fromController,
               label: 'from:',
-              textStyle: AppTheme.of(context).textTheme.body1Bold,
+              textStyle: textTheme.body1Bold,
               keyboardType: TextInputType.datetime,
               icon: TextFieldPrefixIcon(
                 icon: Icons.calendar_today,
@@ -108,7 +109,7 @@ class _CreateTaskWidgetState extends State<CreateTaskWidget> {
               controller: toController,
               label: 'to:',
               textAlignment: Alignment.centerRight,
-              textStyle: AppTheme.of(context).textTheme.body1Bold,
+              textStyle: textTheme.body1Bold,
               keyboardType: TextInputType.datetime,
               icon: TextFieldPrefixIcon(
                 icon: Icons.calendar_today,
@@ -134,9 +135,7 @@ class _CreateTaskWidgetState extends State<CreateTaskWidget> {
           const SizedBox(height: 8),
           Text(
             error!,
-            style: AppTheme.of(context).textTheme.body1Bold.copyWith(
-                  color: AppTheme.of(context).colorTheme.error,
-                ),
+            style: textTheme.body1Bold.copyWith(color: colorTheme.error),
             maxLines: 3,
             textAlign: TextAlign.center,
           ),

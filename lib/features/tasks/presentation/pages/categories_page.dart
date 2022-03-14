@@ -18,6 +18,8 @@ class CategoriesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = AppTheme.of(context).textTheme;
+
     return BlocBuilder<TasksBloc, TasksState>(
       builder: (context, state) {
         return ListView(
@@ -27,12 +29,7 @@ class CategoriesPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Expanded(
-                  child: Text(
-                    'Categories',
-                    style: AppTheme.of(context).textTheme.headline1,
-                  ),
-                ),
+                Expanded(child: Text('Categories', style: textTheme.headline1)),
                 StyledIconButton(
                   icon: Icons.search,
                   iconSize: 64,
@@ -81,10 +78,7 @@ class CategoriesPage extends StatelessWidget {
 
                 return todayTasks.isNotEmpty
                     ? [
-                        Text(
-                          'Today',
-                          style: AppTheme.of(context).textTheme.headline2,
-                        ),
+                        Text('Today', style: textTheme.headline2),
                         const SizedBox(height: 10),
                         ...todayTasks
                             .map((e) => Padding(
