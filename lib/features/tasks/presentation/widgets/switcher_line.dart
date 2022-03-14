@@ -6,15 +6,17 @@ import 'package:road_to_the_dream/app/theme/bloc/app_theme.dart';
 part 'switcher_line.freezed.dart';
 
 class SwitcherLine extends StatelessWidget {
+  final double height;
+  final void Function(int index) onTileTap;
   final List<TextAndColor> tiles;
   final double tileWidth;
-  final void Function(int index) onTileTap;
 
   const SwitcherLine({
     Key? key,
+    required this.onTileTap,
     required this.tiles,
     required this.tileWidth,
-    required this.onTileTap,
+    this.height = 32,
   }) : super(key: key);
 
   @override
@@ -23,7 +25,7 @@ class SwitcherLine extends StatelessWidget {
       scrollDirection: Axis.horizontal,
       child: SizedBox(
         width: tileWidth * tiles.length,
-        height: 32,
+        height: height,
         child: Stack(
           children: tiles
               .map<Widget>(
