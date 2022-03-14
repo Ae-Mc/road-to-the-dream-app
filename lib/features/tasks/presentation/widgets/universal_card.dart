@@ -117,7 +117,7 @@ class UniversalCard extends StatelessWidget {
                   color: colorTheme.onPrimary,
                   fontWeight: FontWeight.bold,
                 ),
-                strokeWidth: 0.5,
+                strokeWidth: textTheme.strokeWidth,
                 strokeColor: colorTheme.primary,
               ),
             ],
