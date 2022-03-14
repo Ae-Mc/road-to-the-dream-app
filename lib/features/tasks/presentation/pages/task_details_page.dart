@@ -10,6 +10,7 @@ import 'package:road_to_the_dream/features/tasks/presentation/bloc/tasks_state.d
 import 'package:road_to_the_dream/features/tasks/presentation/widgets/stroke_text.dart';
 import 'package:road_to_the_dream/features/tasks/presentation/widgets/styled_icon_button.dart';
 import 'package:road_to_the_dream/features/tasks/presentation/widgets/switcher_line.dart';
+import 'package:road_to_the_dream/features/tasks/domain/entities/stage.dart';
 
 class TaskDetailsPage extends StatelessWidget {
   final UUID taskID;
@@ -51,6 +52,7 @@ class TaskDetailsPage extends StatelessWidget {
                         ),
                       ],
                     ),
+                    const SizedBox(height: 16),
                     Container(
                       decoration: BoxDecoration(
                         borderRadius:
@@ -77,18 +79,23 @@ class TaskDetailsPage extends StatelessWidget {
                               textAlign: TextAlign.center,
                             ),
                           ),
-                          if (task.stages.isNotEmpty)
-                            const SizedBox(height: 16),
                           ...task.stages.map(
                             (stage) => Column(
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
+                                const SizedBox(height: 16),
                                 StrokeText(
                                   stage.name,
                                   style: textTheme.title2,
                                   strokeColor: colorTheme.primary,
                                   strokeWidth: textTheme.strokeWidth,
                                 ),
+                                if (stage.from != null)
+                                  Text(
+                                    stage.getDateRangeString(),
+                                    style: textTheme.caption
+                                        .copyWith(color: colorTheme.primary),
+                                  ),
                               ],
                             ),
                           ),
