@@ -1,9 +1,12 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
 import 'package:road_to_the_dream/app/router/app_router.gr.dart';
 import 'package:road_to_the_dream/features/tasks/domain/entities/category.dart';
+import 'package:road_to_the_dream/features/tasks/presentation/bloc/tasks_bloc.dart';
+import 'package:road_to_the_dream/features/tasks/presentation/bloc/tasks_event.dart';
 import 'package:road_to_the_dream/features/tasks/presentation/widgets/universal_card.dart';
 
 class CategoryCard extends StatelessWidget {
@@ -25,8 +28,8 @@ class CategoryCard extends StatelessWidget {
   }
 
   void deleteCategory(BuildContext context) {
-    //TODO
-    GetIt.I<Logger>().d('Delete category');
+    BlocProvider.of<TasksBloc>(context)
+        .add(TasksEvent.categoryRemoved(category.id));
   }
 
   void renameCategory(BuildContext context) {
