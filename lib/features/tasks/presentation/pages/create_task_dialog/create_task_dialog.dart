@@ -3,18 +3,22 @@ import 'dart:ui';
 import 'package:assorted_layout_widgets/assorted_layout_widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
-import 'package:logger/logger.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:road_to_the_dream/app/theme/bloc/app_theme.dart';
 import 'package:road_to_the_dream/features/tasks/domain/entities/stage.dart';
 import 'package:road_to_the_dream/features/tasks/domain/entities/task.dart';
 import 'package:road_to_the_dream/features/tasks/domain/entities/uuid.dart';
+import 'package:road_to_the_dream/features/tasks/presentation/bloc/tasks_bloc.dart';
+import 'package:road_to_the_dream/features/tasks/presentation/bloc/tasks_event.dart';
 import 'package:road_to_the_dream/features/tasks/presentation/pages/create_task_dialog/widgets/create_stage_widget.dart';
 import 'package:road_to_the_dream/features/tasks/presentation/pages/create_task_dialog/widgets/create_task_widget.dart';
 import 'package:road_to_the_dream/features/tasks/presentation/widgets/styled_icon_button.dart';
 
 class CreateTaskDialog extends StatefulWidget {
-  const CreateTaskDialog({Key? key}) : super(key: key);
+  final UUID categoryID;
+
+  const CreateTaskDialog({Key? key, required this.categoryID})
+      : super(key: key);
 
   @override
   State<CreateTaskDialog> createState() => _CreateTaskDialogState();
@@ -55,9 +59,8 @@ class _CreateTaskDialogState extends State<CreateTaskDialog>
                           curve: Curves.easeInOut,
                         ),
                       ),
-                      child: CreateTaskWidget(
-                        onNext: onCreateTaskDialogComplete,
-                      ),
+                      child:
+                          CreateTaskWidget(onNext: onCreateTaskDialogComplete),
                     ),
                     ...List.generate(
                       stagesCount,
@@ -117,7 +120,9 @@ class _CreateTaskDialogState extends State<CreateTaskDialog>
     // ignore: avoid-ignoring-return-values
     task = task.copyWith(stages: [...task.stages, stage]);
     if (currenStageIndex + 1 == stagesCount) {
-      GetIt.I<Logger>().d(task.toString().split(', ').join(',\n     '));
+      BlocProvider.of<TasksBloc>(context)
+          .add(TasksEvent.taskAdded(widget.categoryID, task));
+      Navigator.of(context).pop();
     } else {
       setState(() => currentStageNumber++);
     }
@@ -129,10 +134,17 @@ class _CreateTaskDialogState extends State<CreateTaskDialog>
     DateTime? from,
     DateTime? to,
   }) {
-    setState(() {
-      this.stagesCount = stagesCount;
-      currentStageNumber = 1;
-      task = Task(id: UUID(), name: name, start: from, end: to);
-    });
+    task = Task(id: UUID(), name: name, start: from, end: to);
+
+    if (stagesCount == 0) {
+      BlocProvider.of<TasksBloc>(context)
+          .add(TasksEvent.taskAdded(widget.categoryID, task));
+      Navigator.of(context).pop();
+    } else {
+      setState(() {
+        this.stagesCount = stagesCount;
+        currentStageNumber = 1;
+      });
+    }
   }
 }

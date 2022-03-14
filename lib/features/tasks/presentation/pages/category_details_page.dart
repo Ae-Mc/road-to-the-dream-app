@@ -73,7 +73,7 @@ class CategoryDetailsPage extends StatelessWidget {
                     onPressed: () =>
                         AutoRouter.of(context).pushNativeRoute(DialogRoute(
                       context: context,
-                      builder: (_) => const CreateTaskDialog(),
+                      builder: (_) => CreateTaskDialog(categoryID: categoryID),
                     )),
                   ),
                 ),
