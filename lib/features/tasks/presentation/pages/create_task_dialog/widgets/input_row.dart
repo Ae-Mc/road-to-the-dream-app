@@ -37,7 +37,7 @@ class InputRow implements TableRow {
             maxLines: 2,
             style: textStyle ?? AppTheme.of(context).textTheme.title3,
             strokeColor: AppTheme.of(context).colorTheme.primary,
-            strokeWidth: 0.5,
+            strokeWidth: AppTheme.of(context).textTheme.strokeWidth,
           ),
         ),
         const SizedBox(),

@@ -101,7 +101,7 @@ class _CreateCategoryDialogState extends State<CreateCategoryDialog> {
                                 color: colorTheme.tertiary,
                               ),
                               strokeColor: colorTheme.primary,
-                              strokeWidth: 1,
+                              strokeWidth: textTheme.strokeWidth,
                             ),
                             const SizedBox(width: 16),
                             StyledTextField(
@@ -131,7 +131,7 @@ class _CreateCategoryDialogState extends State<CreateCategoryDialog> {
                                 color: colorTheme.tertiary,
                               ),
                               strokeColor: colorTheme.primary,
-                              strokeWidth: 1,
+                              strokeWidth: textTheme.strokeWidth,
                             ),
                             const SizedBox(width: 16),
                             StyledTextField(
