@@ -23,17 +23,17 @@ class StrokeText extends StatelessWidget {
         Text(
           text,
           maxLines: maxLines,
-          style: style,
-        ),
-        Text(
-          text,
-          maxLines: maxLines,
           style: style.copyWith(
             foreground: Paint()
               ..strokeWidth = strokeWidth
               ..color = strokeColor
               ..style = PaintingStyle.stroke,
           ),
+        ),
+        Text(
+          text,
+          maxLines: maxLines,
+          style: style,
         ),
       ],
     );
