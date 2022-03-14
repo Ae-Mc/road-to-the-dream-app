@@ -4,7 +4,12 @@ import 'dart:ui';
 import 'package:assorted_layout_widgets/assorted_layout_widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:road_to_the_dream/app/theme/bloc/app_theme.dart';
+import 'package:road_to_the_dream/features/tasks/domain/entities/category.dart';
+import 'package:road_to_the_dream/features/tasks/domain/entities/uuid.dart';
+import 'package:road_to_the_dream/features/tasks/presentation/bloc/tasks_bloc.dart';
+import 'package:road_to_the_dream/features/tasks/presentation/bloc/tasks_event.dart';
 import 'package:road_to_the_dream/features/tasks/presentation/widgets/stroke_text.dart';
 import 'package:road_to_the_dream/features/tasks/presentation/widgets/styled_icon_button.dart';
 import 'package:road_to_the_dream/features/tasks/presentation/widgets/styled_text_field.dart';
@@ -77,7 +82,7 @@ class _CreateCategoryDialogState extends State<CreateCategoryDialog> {
                           'Create category',
                           style: textTheme.title1.copyWith(
                             color: colorTheme.primary,
-                              ),
+                          ),
                           textAlign: TextAlign.center,
                         ),
                       ),
@@ -94,7 +99,7 @@ class _CreateCategoryDialogState extends State<CreateCategoryDialog> {
                               'Category name',
                               style: textTheme.title3.copyWith(
                                 color: colorTheme.tertiary,
-                                  ),
+                              ),
                               strokeColor:
                                   AppTheme.of(context).colorTheme.primary,
                               strokeWidth: 1,
@@ -125,7 +130,7 @@ class _CreateCategoryDialogState extends State<CreateCategoryDialog> {
                               'Color',
                               style: textTheme.title3.copyWith(
                                 color: colorTheme.tertiary,
-                                  ),
+                              ),
                               strokeColor: colorTheme.primary,
                               strokeWidth: 1,
                             ),
@@ -171,7 +176,7 @@ class _CreateCategoryDialogState extends State<CreateCategoryDialog> {
                     ElevatedButton(
                       onPressed:
                           errors.isEmpty ? () => createCategory(context) : null,
-                          child: const Text('OK'),
+                      child: const Text('OK'),
                     ),
                   ],
                 ),
@@ -206,7 +211,14 @@ class _CreateCategoryDialogState extends State<CreateCategoryDialog> {
   }
 
   void createCategory(BuildContext context) {
-    // TODO
+    BlocProvider.of<TasksBloc>(context).add(TasksEvent.categoryAdded(
+      Category(
+        id: UUID(),
+        name: categoryNameController.text,
+        color: getCurrentColor().value,
+        tasks: [],
+      ),
+    ));
     Navigator.of(context).pop();
   }
 }
