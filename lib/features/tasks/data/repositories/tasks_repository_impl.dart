@@ -31,24 +31,25 @@ class TasksRepositoryImpl implements TasksRepository {
   @override
   Future<Either<Failure, void>> removeCategory(UUID categoryID) =>
       localDataSource.save(
-        load().where((element) => element.id != categoryID).toList(),
+        load()..removeWhere((element) => element.id == categoryID),
       );
 
   @override
   Future<Either<Failure, void>> removeTask(UUID taskID) =>
       localDataSource.save(load()
-          .map(
-            (element) => element.copyWith(
-              tasks: element.tasks
-                  .where((element) => element.id != taskID)
-                  .toList(),
-            ),
-          )
-          .toList());
+        ..forEach(
+          (element) =>
+              element..tasks.removeWhere((element) => element.id == taskID),
+        ));
 
   @override
-  Future<Either<Failure, void>> replaceTask(UUID taskID, Task newTask) {
-    // TODO: implement replaceTask
-    throw UnimplementedError();
-  }
+  Future<Either<Failure, void>> replaceTask(UUID taskID, Task newTask) =>
+      localDataSource.save(
+        load()
+          ..forEach((category) =>
+              category.tasks.any((task) => task.id == taskID)
+                  ? (category.tasks[category.tasks
+                      .indexWhere((task) => task.id == taskID)] = newTask)
+                  : null),
+      );
 }
