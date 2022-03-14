@@ -15,8 +15,8 @@ class CategoryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return UniversalCard(
       color: Color(category.color + 0xFF000000),
-      onCardTap: () =>
-          AutoRouter.of(context).push(CategoryDetailsRoute(category: category)),
+      onCardTap: () => AutoRouter.of(context)
+          .push(CategoryDetailsRoute(categoryID: category.id)),
       onDelete: () => deleteCategory(context),
       onRename: () => renameCategory(context),
       subtitle: '${category.tasks.length} tasks',
