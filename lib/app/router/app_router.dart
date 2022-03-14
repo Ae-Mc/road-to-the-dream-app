@@ -5,6 +5,7 @@ import 'package:road_to_the_dream/features/splash/presentation/pages/splash_page
 import 'package:road_to_the_dream/features/tasks/presentation/pages/categories_page.dart';
 import 'package:road_to_the_dream/features/tasks/presentation/pages/category_details_page.dart';
 import 'package:road_to_the_dream/features/tasks/presentation/pages/search_category_page.dart';
+import 'package:road_to_the_dream/features/tasks/presentation/pages/task_details_page.dart';
 
 @AdaptiveAutoRouter(
   replaceInRouteName: 'Page,Route',
@@ -17,6 +18,7 @@ import 'package:road_to_the_dream/features/tasks/presentation/pages/search_categ
         AutoRoute(page: CategoryDetailsPage, guards: [InitGuard]),
         AutoRoute(page: SearchCategoryPage, guards: [InitGuard]),
         AutoRoute(page: SplashPage),
+        AutoRoute(page: TaskDetailsPage, guards: [InitGuard]),
       ],
     ),
   ],
